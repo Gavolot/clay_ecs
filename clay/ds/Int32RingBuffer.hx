@@ -1,14 +1,16 @@
 package clay.ds;
 
 
-// https://github.com/eliasku/ecx/blob/develop/src/ecx/ds/CInt32RingBuffer.hx
-// https://github.com/zeliard/Dispatcher/blob/master/JobDispatcher/ObjectPool.h
+import haxe.ds.Vector;
 
-#if js
-private typedef IntArray = js.html.Int32Array;
-#else
-private typedef IntArray = haxe.ds.Vector<Int>;
-#end
+/** https://github.com/zeliard/Dispatcher/blob/master/JobDispatcher/ObjectPool.h **/
+
+
+//#if js
+//private typedef IntArray = js.html.Int32Array;
+//#else
+private typedef IntArray = Vector<Int>;
+//#end
 
 
 class Int32RingBuffer {

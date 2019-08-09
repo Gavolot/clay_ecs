@@ -36,14 +36,15 @@ class Processor {
 		}
 
 	}
-
-	function init() {}
+	function init(){}
 	function onadded() {}
 	function onremoved() {}
 	function onenabled() {}
 	function ondisabled() {}
 	function onprioritychanged(value:Int) {}
-	function update(dt:Float) {}
+	//function update(dt:Float) {}
+	function step(){}
+	function draw(){}
 
 	@:access(clay.core.ProcessorManager)
 	inline function set_priority(value:Int) : Int {

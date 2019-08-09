@@ -41,13 +41,25 @@ class ProcessorManager {
 		
 	}
 
-	public function update(dt:Float) {
+	/*public function update(dt:Float) {
 		
 		for (p in active_processors) {
 			p.update(dt);
 		}
 		
+	}*/
+	public function step() {
+		for (p in active_processors) {
+			p.step();
+		}
 	}
+	public function draw() {
+		for (p in active_processors) {
+			p.draw();
+		}
+	}
+
+
 
 	public function destroy() {
 

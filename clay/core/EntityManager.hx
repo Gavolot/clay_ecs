@@ -14,9 +14,12 @@ class EntityManager {
 	public var capacity (default, null):Int; // 16384, 65536
 	public var used (default, null): Int;
 	public var available(get, never):Int;
+	
+	public var componentManager:ComponentManager;
 
-	var oncreate:Entity->Void;
-	var ondestroy:Entity->Void;
+	//var oncreate:Entity->ComponentManager->Void;
+	var oncreate:(e:Entity, c:ComponentManager)->Void;
+	var ondestroy:(e:Entity, c:ComponentManager)->Void;
 	var onchanged:Entity->Void;
 
 	var _id_pool : Int32RingBuffer;
@@ -44,7 +47,8 @@ class EntityManager {
 
 	}
 
-	public function create(_active:Bool = true) : Entity {
+	@:access(clay.containers.EntityVector)
+	public function New_Entity(_active:Bool = true) : Entity {
 
 		var id:Int = pop_entity_id();
 		var e:Entity = new Entity(id); 
@@ -55,16 +59,17 @@ class EntityManager {
 			_active_mask.enable(id);
 		}
 
-		_entities.add_unsafe(e);
+		_entities._add(id);
 
 		if(oncreate != null) {
-			oncreate(e);
+			oncreate(e, componentManager);
 		}
 
 		return e;
 
 	}
 
+	@:access(clay.containers.EntityVector)
 	public function destroy(e:Entity) {
 
 		var id:Int = e.id;
@@ -76,11 +81,11 @@ class EntityManager {
 		_alive_mask.disable(id);
 		_active_mask.disable(id);
 
-		_entities.remove_unsafe(e);
+		_entities._remove(id);
 		push_entity_id(id);
 
 		if(ondestroy != null) { // is there right place?
-			ondestroy(e);
+			ondestroy(e, componentManager);
 		}
 
 	}

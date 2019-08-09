@@ -23,6 +23,7 @@ class FamilyManager {
 	public function new(_components:ComponentManager) {
 		
 		components = _components;
+		components.familyManager = this;
 		components._entity_changed = check_entity;
 
 		families = [];
@@ -30,7 +31,7 @@ class FamilyManager {
 	}
 
 		/** create family */
-	public function create(_name:String, ?_include:Array<Class<Dynamic>>, ?_exclude:Array<Class<Dynamic>>){
+	public function New_Family(_name:String, ?_include:Array<Class<Dynamic>>, ?_exclude:Array<Class<Dynamic>>){
 
 		var _family = new Family(this, _name, _include, _exclude);
 		handle_duplicate_warning(_family.name);
@@ -58,9 +59,9 @@ class FamilyManager {
 		
 	}
 		/** check entity if it match families */
-	public function check_entity(e:Entity) {
+	public static function check_entity(e:Entity, fm:FamilyManager) {
 		
-		for (f in families) {
+		for (f in fm.families) {
 			f.check(e);
 		}
 

@@ -16,20 +16,20 @@ import clay.Components;
 @:access(clay.Components)
 @:access(clay.Family)
 class ComponentManager {
-
-
 	var components:Array<Components<Dynamic>>;
 	var entities:EntityManager;
 	var flags:Vector<BitFlag>;
 	var types:Map<String, ComponentType>;
 	var id:Int = 0;
+	
+	public var familyManager:FamilyManager;
+	var _entity_changed:(e:Entity, fm:FamilyManager)->Void;
 
-	var _entity_changed:Entity->Void;
 
-
-	public function new(_entities:EntityManager) {
+ 	public function new(_entities:EntityManager) {
 
 		entities = _entities;
+		entities.componentManager = this;
 		entities.oncreate = onentitiycreate;
 		entities.ondestroy = onentitiydestroy;
 
@@ -182,23 +182,21 @@ class ComponentManager {
 		
 	}
 
-	function onentitiycreate(e:Entity) {
+	static function onentitiycreate(e:Entity, c:ComponentManager) {
 
-		flags[e.id] = new BitFlag();
+		c.flags[e.id] = new BitFlag();
 
 	}
 
-	function onentitiydestroy(e:Entity) {
-
-		remove_all(e);
-		flags[e.id] = null;
-
+	static function onentitiydestroy(e:Entity, c:ComponentManager) {
+		c.remove_all(e);
+		c.flags[e.id] = null;
 	}
 
 	inline function entity_changed(e:Entity):Void {
 		
 		if(_entity_changed != null) {
-			_entity_changed(e);
+			_entity_changed(e, familyManager);
 		}
 
 	}
