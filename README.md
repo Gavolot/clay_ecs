@@ -7,6 +7,8 @@ https://yal.cc/r/18/sfgml/ - this is fantastic!
 
 Why fork? I had to redo a couple of things, because gml does not support references to non-static class methods. There are a couple of restrictions about which you can read in the corresponding sfgml help.
 
+The library itself provides a non-complex system for using the cool entity-component-system pattern. It's just fantastic, now you can write games for the game maker studio conveniently using such a cool pattern!
+
 ##### Usage
 ```haxe
 
