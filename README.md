@@ -1,5 +1,11 @@
-# Clay
-Entity-Component-System in haxe.
+# Clay - GML
+Entity-Component-System in haxe. For SFGML Export for using in Game maker studio 1/2;
+
+Do you want to write code in a good programming language, but at the same time use the full power of the ease of gml-api? Yes, and faster code, fantastic, this is possible! Use sfgml!
+
+https://yal.cc/r/18/sfgml/ - this is fantastic!
+
+Why fork? I had to redo a couple of things, because gml does not support references to non-static class methods. There are a couple of restrictions about which you can read in the corresponding sfgml help.
 
 ##### Usage
 ```haxe
