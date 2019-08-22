@@ -5,6 +5,7 @@ import clay.core.ComponentManager;
 import clay.core.EntityManager;
 import clay.core.FamilyManager;
 
+@:keep
 @:access(clay.Processor)
 class ProcessorManager {
 
@@ -28,8 +29,8 @@ class ProcessorManager {
 		families = _families;
 
 		_processors = new Map();
-		active_processors = [];
-
+		//active_processors = [];
+		active_processors = new Array<Processor>();
 	}
 
 	public function init() {
@@ -49,11 +50,13 @@ class ProcessorManager {
 		
 	}*/
 	public function step() {
+		trace("processor_manager_step");
 		for (p in active_processors) {
 			p.step();
 		}
 	}
 	public function draw() {
+		trace("processor_manager_draw");
 		for (p in active_processors) {
 			p.draw();
 		}
@@ -69,8 +72,8 @@ class ProcessorManager {
 
 	} //destroy
 
-	public function add<T:Processor>( _processor:T, priority:Int = 0, _enable:Bool = true ) : T {
-
+	public function add<T:Processor>( _processor:T, priority:Int, _enable:Bool) : T {
+		trace("add");
 		var _processor_class = Type.getClass(_processor);
 		var _class_name = Type.getClassName(_processor_class);
 		
@@ -98,7 +101,7 @@ class ProcessorManager {
 	} //add
 
 	public function remove<T:Processor>( _processor_class:Class<T> ) : T {
-
+		
 		var _class_name = Type.getClassName(_processor_class);
 		var _processor:T = cast _processors.get(_class_name);
 

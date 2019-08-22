@@ -100,7 +100,7 @@ class EntityManager {
 	public inline function get(id:Int):Entity {
 
 		if(!_alive_mask.get(id)) {
-			throw('get / entity ${id} is not found');
+			//throw('get / entity ${id} is not found');
 		}
 
 		return new Entity(id);
@@ -110,7 +110,8 @@ class EntityManager {
 	public inline function is_active(e:Entity):Bool {
 
 		if(!has(e)) {
-			throw('is_active / entity ${e.id} is not found');
+			//throw('is_active / entity ${e.id} is not found');
+			trace('is_active / entity ${e.id} is not found');
 		}
 
 		return _active_mask.get(e.id);
@@ -120,7 +121,8 @@ class EntityManager {
 	public inline function activate(e:Entity) {
 
 		if(!has(e)) {
-			throw('activate / entity ${e.id} is not found');
+			//throw('activate / entity ${e.id} is not found');
+			trace('activate / entity ${e.id} is not found');
 		}
 
 		_active_mask.enable(e.id);
@@ -134,7 +136,8 @@ class EntityManager {
 	public inline function deactivate(e:Entity) {
 
 		if(!has(e)) {
-			throw('deactivate / entity ${e.id} is not found');
+			//throw('deactivate / entity ${e.id} is not found');
+			trace('deactivate / entity ${e.id} is not found');
 		}
 
 		_active_mask.disable(e.id);
