@@ -111,11 +111,11 @@ class Main {
 		var families = new FamilyManager(components);
 		var processors = new ProcessorManager(entities, components, families);
 
-		families.create('ab_family', [ComponentA, ComponentB]);
-		processors.add(new ProcessorA());
+		families.New_Family('ab_family', [ComponentA, ComponentB]);
+		processors.add(new ProcessorA(), 0, true);
 
-		var e1 = entities.create();
-		var e2 = entities.create();
+		var e1 = entities.New_Entity();
+		var e2 = entities.New_Entity();
 		components.set_many(e1, [new ComponentA('some_string'), new ComponentB(112358)]);
 		components.set_many(e2, [new ComponentA('other_string'), new ComponentB(1618)]);
 
