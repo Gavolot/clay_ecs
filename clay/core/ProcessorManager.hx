@@ -163,7 +163,7 @@ class ProcessorManager {
 		var ap:Processor = null;
 		for (i in 0...active_processors.length) {
 			ap = active_processors[i];
-			if (p.priority <= ap.priority) {
+			if (p.priority >= ap.priority) {
 				active_processors.insert(i, p);
 				added = true;
 				break;
