@@ -118,9 +118,17 @@ class Main {
 		var e2 = entities.New_Entity();
 		components.set_many(e1, [new ComponentA('some_string'), new ComponentB(112358)]);
 		components.set_many(e2, [new ComponentA('other_string'), new ComponentB(1618)]);
+		
+		processors.init();
 
-		processors.update(1/60);
-
+	}
+	
+	static function step(){
+		processors.step();
+	}
+	
+	static function draw() {
+		processors.draw();
 	}
 
 }

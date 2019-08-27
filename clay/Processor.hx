@@ -14,6 +14,7 @@ class Processor {
 	public var priority (default, set) : Int = 0;
 	public var active (get, set) : Bool;
 	var _active : Bool = false;
+	var _inited : Bool = false;
 
 	var components:ComponentManager;
 	var entities:EntityManager;
@@ -36,7 +37,7 @@ class Processor {
 		}
 
 	}
-	function init(){}
+	function init(){ _inited = true; }
 	function onadded() {}
 	function onremoved() {}
 	function onenabled() {}

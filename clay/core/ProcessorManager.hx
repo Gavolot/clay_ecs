@@ -4,6 +4,8 @@ package clay.core;
 import clay.core.ComponentManager;
 import clay.core.EntityManager;
 import clay.core.FamilyManager;
+import gml.ds.ArrayList;
+import haxe.ds.Vector;
 
 @:keep
 @:access(clay.Processor)
@@ -13,13 +15,13 @@ class ProcessorManager {
 		/** The list of processors */
 	@:noCompletion public var _processors:Map<String, Processor>;
 		/** Array of active processors */
-	public var active_processors: Array<Processor>;
+	public var active_processors: ArrayList<Processor>;
 	
 	var entities:EntityManager;
 	var components:ComponentManager;
 	var families:FamilyManager;
 
-	var inited:Bool = false;
+	var first_inited:Bool = false;
 
 
 	public function new(_entities:EntityManager, _components:ComponentManager, _families:FamilyManager) {
@@ -29,34 +31,24 @@ class ProcessorManager {
 		families = _families;
 
 		_processors = new Map();
-		//active_processors = [];
-		active_processors = new Array<Processor>();
+		active_processors = new ArrayList<Processor>();
 	}
 
-	public function init() {
-
-		for (p in _processors) {
-			p.init();
+	public function first_init() {
+		for (p in active_processors){
+			if (!p._inited){
+				p.init();
+				p._inited = true;
+			}
 		}
-		inited = true;
-		
+		first_inited = true;
 	}
-
-	/*public function update(dt:Float) {
-		
-		for (p in active_processors) {
-			p.update(dt);
-		}
-		
-	}*/
 	public function step() {
-		trace("processor_manager_step");
 		for (p in active_processors) {
 			p.step();
 		}
 	}
 	public function draw() {
-		trace("processor_manager_draw");
 		for (p in active_processors) {
 			p.draw();
 		}
@@ -72,8 +64,7 @@ class ProcessorManager {
 
 	} //destroy
 
-	public function add<T:Processor>( _processor:T, priority:Int, _enable:Bool) : T {
-		trace("add");
+	public function add<T:Processor>( _processor:T, priority:Int, _enable:Bool, _forceInit:Bool = false) : T {
 		var _processor_class = Type.getClass(_processor);
 		var _class_name = Type.getClassName(_processor_class);
 		
@@ -87,12 +78,14 @@ class ProcessorManager {
 		_processor.processors = this;
 
 		_processor.onadded();
-
-		if(inited) {
-			_processor.init();
+		if (_forceInit){
+			if (!_processor._inited){
+				_processor.init();
+				_processor._inited = true;
+			}
 		}
 
-		if(_enable) {
+		if (_enable) {
 			enable(_processor_class);
 		}
 
@@ -136,6 +129,14 @@ class ProcessorManager {
 		
 		var _class_name = Type.getClassName(_processor_class);
 		var _processor = _processors.get( _class_name );
+		
+		if (this.first_inited){
+			if (!_processor._inited){
+				_processor.init();
+				_processor._inited = true;
+			}
+		}
+		
 		if(_processor != null && !_processor.active) {
 			_processor.onenabled();
 			_processor._active = true;
@@ -168,16 +169,15 @@ class ProcessorManager {
 				break;
 			}
 		}
-		if(!added) {
-			active_processors.push(p);
+		if (!added) {
+			active_processors.add(p);
+			//active_processors.push(p);
 		}
 
 	}
 
 	inline function _remove_active(p:Processor) {
-
 		active_processors.remove(p);
-
 	}
 	
 		/** remove all processors from list */
