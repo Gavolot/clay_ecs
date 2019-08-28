@@ -119,7 +119,7 @@ class Main {
 		components.set_many(e1, [new ComponentA('some_string'), new ComponentB(112358)]);
 		components.set_many(e2, [new ComponentA('other_string'), new ComponentB(1618)]);
 		
-		processors.init();
+		processors.first_init();
 
 	}
 	
