@@ -46,6 +46,8 @@ class Processor {
 	//function update(dt:Float) {}
 	function step(){}
 	function draw(){}
+	
+	function draw_gui(){}
 
 	@:access(clay.core.ProcessorManager)
 	inline function set_priority(value:Int) : Int {

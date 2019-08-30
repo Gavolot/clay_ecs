@@ -53,6 +53,12 @@ class ProcessorManager {
 			p.draw();
 		}
 	}
+	
+	public function draw_gui() {
+		for (p in active_processors) {
+			p.draw_gui();
+		}
+	}
 
 
 

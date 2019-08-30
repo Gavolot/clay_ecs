@@ -15,6 +15,8 @@ class EntityManager {
 	public var used (default, null): Int;
 	public var available(get, never):Int;
 	
+	public var count:Int;
+	
 	public var componentManager:ComponentManager;
 	
 	var oncreate:(e:Entity, c:ComponentManager)->Void;
@@ -25,6 +27,8 @@ class EntityManager {
 	
 	var _alive_mask : BitVector;
 	var _active_mask : BitVector;
+	
+	
 	var _entities : EntityVector;
 
 
@@ -36,6 +40,8 @@ class EntityManager {
 
 		capacity = _capacity;
 		used = 0;
+		
+		this.count = 0;
 
 		_id_pool = new Int32RingBuffer(capacity);
 
@@ -50,7 +56,9 @@ class EntityManager {
 	public function New_Entity(_active:Bool = true) : Entity {
 
 		var id:Int = pop_entity_id();
-		var e:Entity = new Entity(id); 
+		var e:Entity = new Entity(id);
+		
+		this.count++;
 
 		_alive_mask.enable(id);
 
@@ -82,6 +90,8 @@ class EntityManager {
 
 		_entities._remove(id);
 		push_entity_id(id);
+		
+		this.count--;
 
 		if(ondestroy != null) { // is there right place?
 			ondestroy(e, componentManager);
