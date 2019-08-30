@@ -5,6 +5,7 @@ package clay.core;
 import clay.ds.Int32RingBuffer;
 import clay.ds.BitVector;
 import clay.containers.EntityVector;
+import gml.ds.ArrayList;
 
 import clay.Entity;
 import clay.Family;
@@ -17,7 +18,8 @@ class FamilyManager {
 
 
 	var components:ComponentManager;
-	var families:Array<Family>;
+	//var families:Array<Family>;
+	var families:ArrayList<Family>;
 
 
 	public function new(_components:ComponentManager) {
@@ -26,7 +28,8 @@ class FamilyManager {
 		components.familyManager = this;
 		components._entity_changed = check_entity;
 
-		families = [];
+		//families = [];
+		families = new ArrayList<Family>();
 
 	}
 
@@ -35,7 +38,8 @@ class FamilyManager {
 
 		var _family = new Family(this, _name, _include, _exclude);
 		handle_duplicate_warning(_family.name);
-		families.push(_family);
+		//families.push(_family);
+		families.add(_family);
 
 	}
 
@@ -69,9 +73,8 @@ class FamilyManager {
 
 		/** remove all families */
 	public function clear() {
-
-		families.splice(0, families.length);
-
+		//families.splice(0, families.length);
+		families.clear();
 	}
 
 	inline function handle_duplicate_warning(_name:String) {
