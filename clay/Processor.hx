@@ -1,6 +1,5 @@
 package clay;
 
-
 import clay.core.ComponentManager;
 import clay.core.EntityManager;
 import clay.core.FamilyManager;
@@ -37,7 +36,11 @@ class Processor {
 		}
 
 	}
-	function init(){ _inited = true; }
+	function init(){
+		#if debug
+		trace(this.priority);
+		#end
+	}
 	function onadded() {}
 	function onremoved() {}
 	function onenabled() {}
