@@ -1,12 +1,7 @@
 package clay.core;
-import clay.ds.Int32RingBuffer;
-import clay.ds.BitVector;
-import clay.containers.EntityVector;
 import gml.ds.ArrayList;
-
 import clay.Entity;
 import clay.Family;
-import clay.types.ComponentType;
 import clay.core.ComponentManager;
 
 @:access(clay.Family)
