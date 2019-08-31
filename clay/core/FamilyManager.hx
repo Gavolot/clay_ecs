@@ -1,7 +1,4 @@
 package clay.core;
-
-
-
 import clay.ds.Int32RingBuffer;
 import clay.ds.BitVector;
 import clay.containers.EntityVector;
@@ -15,10 +12,7 @@ import clay.core.ComponentManager;
 @:access(clay.Family)
 @:access(clay.core.ComponentManager)
 class FamilyManager {
-
-
 	var components:ComponentManager;
-	//var families:Array<Family>;
 	var families:ArrayList<Family>;
 
 
@@ -27,10 +21,7 @@ class FamilyManager {
 		components = _components;
 		components.familyManager = this;
 		components._entity_changed = check_entity;
-
-		//families = [];
 		families = new ArrayList<Family>();
-
 	}
 
 		/** create family */
@@ -38,7 +29,6 @@ class FamilyManager {
 
 		var _family = new Family(this, _name, _include, _exclude);
 		handle_duplicate_warning(_family.name);
-		//families.push(_family);
 		families.add(_family);
 
 	}
@@ -73,7 +63,6 @@ class FamilyManager {
 
 		/** remove all families */
 	public function clear() {
-		//families.splice(0, families.length);
 		families.clear();
 	}
 
@@ -88,7 +77,6 @@ class FamilyManager {
 	}
 
 	inline function toString() {
-
 		var _list = []; 
 
 		for (f in families) {
@@ -96,14 +84,9 @@ class FamilyManager {
 		}
 
 		return 'families: [${_list.join(", ")}]';
-
 	}
 
 	@:noCompletion public inline function iterator():Iterator<Family> {
-
 		return families.iterator();
-
 	}
-
-
 }
